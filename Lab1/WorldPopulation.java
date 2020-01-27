@@ -28,7 +28,6 @@ public class WorldPopulation{
 		  BufferedReader reader = new BufferedReader(inputFile);
 		  for(int i =0 ; i<13483;i++) {
 		  String line = reader.readLine();
-		  //System.out.println(line+",");
 		  
 			  StringTokenizer tokenizer = new StringTokenizer(line,",");
 			  tokenizer.nextToken();
@@ -36,7 +35,7 @@ public class WorldPopulation{
 			  String pop = tokenizer.nextToken();
 			  //System.out.print(pop+",");
 					 long popcount = Long.parseLong(pop);	
-					System.out.print(popcount+",");
+					 //System.out.print(popcount+",");
 			  population[counter] = popcount;
 			  counter++;
 		  }
@@ -64,15 +63,20 @@ public class WorldPopulation{
 	// Create 3 strategies -- Bubble, insertion, and selection sort.
 	public static void main(String[] args) {
 		WorldPopulation worldPopulation = new WorldPopulation();
+		
 		worldPopulation.readInputFile();
 		SelectionSort ss = new SelectionSort();//Object for selection sort
-		worldPopulation.setStrategy(ss); //Setting selection sort as the strategy 
+		worldPopulation.setStrategy(ss); //Setting selection sort as the strategy
+		worldPopulation.sortPopulation(ss);
+		
+		worldPopulation.readInputFile();
 		InsertionSort is = new InsertionSort();
 		worldPopulation.setStrategy(is);
+		worldPopulation.sortPopulation(is);
+		
+		worldPopulation.readInputFile();
 		BubbleSort bs = new BubbleSort();
 		worldPopulation.setStrategy(bs);
-		worldPopulation.sortPopulation(ss);
-		worldPopulation.sortPopulation(is);
 		worldPopulation.sortPopulation(bs);
 	}
 
