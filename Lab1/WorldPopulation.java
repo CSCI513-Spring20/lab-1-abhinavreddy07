@@ -1,21 +1,18 @@
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.Reader;
 import java.util.StringTokenizer;
 
-public class WorldPopulation {
+public class WorldPopulation{
 
-	SortStrategy sortStrategy;
+	static SortStrategy sortStrategy;
 	long[] population = new long[13484]; // Cheating because we know number of records!!
 	// Lab Exercise:  After creating some strategy classes -- set the default strategy here.
 	public WorldPopulation(){
-		sortStrategy = new #; // Set the default strategy here.	
+		sortStrategy = new InsertionSort(); // Set the default strategy here.
 	}
 	
 	public void readInputFile(){
-		population = readPopulationFile("src\\WorldPopulation.csv");
+		population = readPopulationFile("WorldPopulation.csv");
 	}
 	
 	public void setStrategy(SortStrategy strategy){
@@ -25,13 +22,32 @@ public class WorldPopulation {
 	// Lab Exercise:  Read in the WorldPopulation.csv
 	// Extract ONLY the numbers and store them into population[]
 	public long[] readPopulationFile(String fileName){
-	  
+		int counter = 0;
+	  try {
+		  FileReader inputFile = new FileReader(fileName);
+		  BufferedReader reader = new BufferedReader(inputFile);
+		  String line = reader.readLine();
+		  while( counter!=13484) {
+			  StringTokenizer tokenizer = new StringTokenizer(line,",");
+			  tokenizer.nextToken();
+			  tokenizer.nextToken();
+			  String pop = tokenizer.nextToken();
+					 long popcount = Long.parseLong(pop);
+			  population[counter++] = popcount;
+			  counter++;
+		  }
+		  reader.close();
+	  }
+	  catch(Exception e) {
+		  System.out.println("Exception occured "+e);
+	  }
 		return population;
 	}
 	
 	// Lab Exercise.  Complete this method.
 	// Delegate sorting to the strategy object
-	public void sortPopulation(){		
+	public void sortPopulation(SortStrategy strategy){	
+		strategy.getSortTime(population);
 		
 	}
 	
@@ -44,8 +60,15 @@ public class WorldPopulation {
 	public static void main(String[] args) {
 		WorldPopulation worldPopulation = new WorldPopulation();
 		worldPopulation.readInputFile();
-		worldPopulation.setStrategy(#); //  Currently no strategies.
-		worldPopulation.sortPopulation();	
+		SelectionSort ss = new SelectionSort();//Object for selection sort
+		worldPopulation.setStrategy(ss); //Setting selection sort as the strategy 
+		InsertionSort is = new InsertionSort();
+		worldPopulation.setStrategy(is);
+		BubbleSort bs = new BubbleSort();
+		worldPopulation.setStrategy(bs);
+		worldPopulation.sortPopulation(ss);
+		worldPopulation.sortPopulation(is);
+		worldPopulation.sortPopulation(bs);
 	}
 
 }
