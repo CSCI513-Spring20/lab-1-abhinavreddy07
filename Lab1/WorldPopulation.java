@@ -26,16 +26,21 @@ public class WorldPopulation{
 	  try {
 		  FileReader inputFile = new FileReader(fileName);
 		  BufferedReader reader = new BufferedReader(inputFile);
+		  for(int i =0 ; i<13483;i++) {
 		  String line = reader.readLine();
-		  while( counter!=13484) {
+		  //System.out.println(line+",");
+		  
 			  StringTokenizer tokenizer = new StringTokenizer(line,",");
 			  tokenizer.nextToken();
 			  tokenizer.nextToken();
 			  String pop = tokenizer.nextToken();
-					 long popcount = Long.parseLong(pop);
-			  population[counter++] = popcount;
+			  //System.out.print(pop+",");
+					 long popcount = Long.parseLong(pop);	
+					System.out.print(popcount+",");
+			  population[counter] = popcount;
 			  counter++;
 		  }
+		 
 		  reader.close();
 	  }
 	  catch(Exception e) {
